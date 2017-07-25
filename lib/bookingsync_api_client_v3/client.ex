@@ -165,7 +165,8 @@ defmodule BookingsyncApiClientV3.Client do
   end
 
   defp extract_link(headers) do
-    headers[:link]
+    IO.puts "HEADERS #{inspect(headers)}"
+    headers["link"]
     |> String.split(",")
     |> Enum.find(fn link -> link |> String.contains?("next") end)
   end
