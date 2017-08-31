@@ -86,6 +86,31 @@ defmodule BookingsyncApiClientV3.ClientTest do
     end
   end
 
+  test ".get for show action with query_params returns Result with resource as singular map, resource name,
+  links and meta" do
+    use_cassette "get_booking_with_query_params", match_requests_on: [:query] do
+      booking_id = 500
+      {:ok, %BookingsyncApiClientV3.Result{
+        resource: resource,
+        links: links,
+        meta: meta,
+        resource_name: resource_name
+      }} = data_for_request |> BookingsyncApiClientV3.Client.get("bookings", booking_id, %{include: "photos"})
+
+      refute is_list(resource)
+      assert is_map(resource)
+      assert resource["id"] == booking_id
+      assert is_map(links)
+      assert links["bookings.account"] == "#{base_url}/api/v3/accounts/{bookings.account}"
+      assert is_map(meta)
+      assert resource_name == "bookings"
+
+      expected_urls = ["#{base_url}/api/v3/bookings/#{booking_id}?include=photos"]
+      assert requested_urls_from_cassette("get_booking_with_query_params") == expected_urls
+      assert request_methods_from_cassette("get_booking") == ["get"]
+    end
+  end
+
   test ".get for show action returns :error status, error code and raw error message on error
   when body is not json" do
     use_cassette "get_non_existent_resource_with_id", match_requests_on: [:query] do
