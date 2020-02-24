@@ -4,7 +4,7 @@ defmodule BookingsyncApiClientV3.Mixfile do
   def project do
     [
       app: :bookingsync_api_client_v3,
-      version: "0.0.1",
+      version: "0.0.4",
       elixir: "~> 1.2",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
@@ -38,9 +38,9 @@ defmodule BookingsyncApiClientV3.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:httpotion, "~> 3.0.2"},
+      {:httpotion, "~> 3.1"},
       {:json, "~> 0.3.0"},
-      {:exvcr, "~> 0.8", only: :test},
+      {:exvcr, "~> 0.11.1", only: :test},
       {:excoveralls, "~> 0.4", only: :test}
     ]
   end
@@ -57,9 +57,9 @@ defmodule BookingsyncApiClientV3.Mixfile do
   defp package do
     # These are the default files included in the package
     [
-      maintainers: ["Karol Galanciak"],
+      maintainers: ["Mark Nelson"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/Azdaroth/ex_bookingsync_api_client_v3"}
+      links: %{"GitHub" => "https://github.com/phlare/ex_bookingsync_api_client_v3"}
     ]
   end
 end
