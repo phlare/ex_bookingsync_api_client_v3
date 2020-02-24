@@ -20,9 +20,9 @@ defmodule BookingsyncApiClientV3.Client do
   end
 
   def get(data = %BookingsyncApiClientV3.Data{
-                    oauth_token: oauth_token
-                  }, endpoint, id) do
-    request(:get, data, authorization_header(oauth_token), endpoint, id)
+                   oauth_token: oauth_token
+                 }, endpoint, id, query_params \\ %{}) when is_integer(id) and is_map(query_params) do
+    request(:get, data, authorization_header(oauth_token), endpoint, id, query_params: query_params)
     |> handle_response(200)
   end
 
@@ -94,6 +94,14 @@ defmodule BookingsyncApiClientV3.Client do
   defp request(method, %BookingsyncApiClientV3.Data{
                           base_url: base_url,
                           timeout: timeout
+                        }, headers, endpoint, id, query_params: query_params) when is_integer(id) and is_map(query_params)do
+    HTTPotion.request method, generate_url(base_url, endpoint, id, query_params: query_params),
+      [headers: headers, timeout: timeout]
+  end
+
+  defp request(method, %BookingsyncApiClientV3.Data{
+                          base_url: base_url,
+                          timeout: timeout
                         }, headers, endpoint, id, body) when is_integer(id) do
     {:ok, encoded_body} = body |> JSON.encode
     HTTPotion.request method, generate_url(base_url, endpoint, id), [body: encoded_body,
@@ -118,8 +126,8 @@ defmodule BookingsyncApiClientV3.Client do
   end
 
   defp perform_get_for_index_action(data = %BookingsyncApiClientV3.Data{
-                                              oauth_token: oauth_token
-                                            }, endpoint, query_params) do
+                          oauth_token: oauth_token,
+                        }, endpoint, query_params) do
     request(:get, data, authorization_header(oauth_token), endpoint, query_params: query_params)
   end
 
