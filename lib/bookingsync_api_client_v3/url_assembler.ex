@@ -1,18 +1,18 @@
 defmodule BookingsyncApiClientV3.UrlAssembler do
 
   def generate_url(base_url, endpoint, id, query_params: query_params) when is_integer(id) and query_params == %{} do
-    [base_url, api_scope, endpoint, id]
+    [base_url, api_scope(), endpoint, id]
     |> Enum.join("/")
   end
 
   def generate_url(base_url, endpoint, id, query_params: query_params) when is_integer(id) do
-    [base_url, api_scope, endpoint, id]
+    [base_url, api_scope(), endpoint, id]
     |> Enum.join("/")
     |> join_url_and_query_params_with(query_params, "?")
   end
 
   def generate_url(base_url, scope, scope_id, endpoint) do
-    [base_url, api_scope, scope, scope_id, endpoint] |> Enum.join("/")
+    [base_url, api_scope(), scope, scope_id, endpoint] |> Enum.join("/")
   end
 
   def generate_url(base_url, endpoint, query_params: query_params) when query_params == %{} do
@@ -20,18 +20,18 @@ defmodule BookingsyncApiClientV3.UrlAssembler do
   end
 
   def generate_url(base_url, endpoint, query_params: query_params) do
-    [base_url, api_scope, endpoint]
+    [base_url, api_scope(), endpoint]
     |> Enum.join("/")
     |> join_url_and_query_params_with(query_params, "?")
   end
 
   def generate_url(base_url, endpoint, id) when is_integer(id) do
-    [base_url, api_scope, endpoint, id] |> Enum.join("/")
+    [base_url, api_scope(), endpoint, id] |> Enum.join("/")
   end
 
 
   def generate_url(base_url, endpoint) do
-    [base_url, api_scope, endpoint] |> Enum.join("/")
+    [base_url, api_scope(), endpoint] |> Enum.join("/")
   end
 
   defp join_url_and_query_params_with(url, query_params, joiner) do

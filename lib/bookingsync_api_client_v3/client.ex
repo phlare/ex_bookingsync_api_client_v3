@@ -30,7 +30,7 @@ defmodule BookingsyncApiClientV3.Client do
                     oauth_token: oauth_token
                   }, endpoint, body) do
     request(:post, data,
-      jsonapi_content_type ++ authorization_header(oauth_token), endpoint, body)
+      jsonapi_content_type() ++ authorization_header(oauth_token), endpoint, body)
     |> handle_response(201)
   end
 
@@ -38,20 +38,20 @@ defmodule BookingsyncApiClientV3.Client do
                     oauth_token: oauth_token
                   }, scope, scope_id, endpoint, body) do
     request(:post, data,
-      jsonapi_content_type ++ authorization_header(oauth_token), scope, scope_id, endpoint, body)
+      jsonapi_content_type() ++ authorization_header(oauth_token), scope, scope_id, endpoint, body)
     |> handle_response(201)
   end
 
   def patch(data = %BookingsyncApiClientV3.Data{oauth_token: oauth_token}, endpoint, id, body) do
     request(:patch, data,
-      jsonapi_content_type ++ authorization_header(oauth_token), endpoint, id, body)
+      jsonapi_content_type() ++ authorization_header(oauth_token), endpoint, id, body)
     |> handle_response(200)
   end
 
   def delete(data = %BookingsyncApiClientV3.Data{
                       oauth_token: oauth_token
                     }, endpoint, id) do
-    response = request(:delete, data, jsonapi_content_type ++ authorization_header(oauth_token),
+    response = request(:delete, data, jsonapi_content_type() ++ authorization_header(oauth_token),
       endpoint, id)
     case response.status_code do
       204 -> {:ok, ""}
