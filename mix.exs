@@ -4,17 +4,17 @@ defmodule BookingsyncApiClientV3.Mixfile do
   def project do
     [
       app: :bookingsync_api_client_v3,
-      version: "0.0.4",
+      version: "0.0.5",
       elixir: "~> 1.2",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
-      deps: deps,
+      deps: deps(),
       elixirc_paths: elixirc_paths(Mix.env),
       preferred_cli_env: [
         vcr: :test, "vcr.delete": :test, "vcr.check": :test, "vcr.show": :test
       ],
-      description: description,
-      package: package,
+      description: description(),
+      package: package(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [coveralls: :test]
     ]
@@ -63,5 +63,3 @@ defmodule BookingsyncApiClientV3.Mixfile do
     ]
   end
 end
-
-
